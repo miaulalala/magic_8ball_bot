@@ -23,7 +23,7 @@ jobs:
       fail-fast: false
       matrix:
         php-versions: ['8.2', '8.3']
-        server-versions: ['stable33', 'stable34']
+        server-versions: ['stable33', 'main']
 
     name: PHP ${{ matrix.php-versions }} / NC ${{ matrix.server-versions }}
 
@@ -60,6 +60,10 @@ jobs:
           ini-values: disable_functions=
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install spreed dependencies
+        working-directory: apps/spreed
+        run: composer install --no-dev
 
       - name: Install app dependencies
         working-directory: apps/magic_8ball_bot
