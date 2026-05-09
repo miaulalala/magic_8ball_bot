@@ -1,0 +1,83 @@
+# SPDX-FileCopyrightText: 2026 Anna Larch
+# SPDX-License-Identifier: MIT
+
+name: PHPUnit
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: phpunit-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  phpunit:
+    runs-on: ubuntu-latest
+
+    strategy:
+      fail-fast: false
+      matrix:
+        php-versions: ['8.2', '8.3']
+        server-versions: ['stable33', 'stable34']
+
+    name: PHP ${{ matrix.php-versions }} / NC ${{ matrix.server-versions }}
+
+    steps:
+      - name: Checkout server
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+          submodules: true
+          repository: nextcloud/server
+          ref: ${{ matrix.server-versions }}
+
+      - name: Checkout spreed
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+          repository: nextcloud/spreed
+          ref: ${{ matrix.server-versions }}
+          path: apps/spreed
+
+      - name: Checkout app
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+          path: apps/magic_8ball_bot
+
+      - name: Set up PHP ${{ matrix.php-versions }}
+        uses: shivammathur/setup-php@accd6127cb78bee3e8082180cb391013d204ef9f # v2.37.0
+        with:
+          php-version: ${{ matrix.php-versions }}
+          extensions: ctype, curl, dom, fileinfo, gd, iconv, intl, json, mbstring, openssl, posix, session, simplexml, xmlreader, xmlwriter, zip, zlib, sqlite, pdo_sqlite
+          coverage: none
+          ini-file: development
+          ini-values: disable_functions=
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install app dependencies
+        working-directory: apps/magic_8ball_bot
+        run: |
+          composer remove nextcloud/ocp --dev --no-update
+          composer install
+
+      - name: Set up Nextcloud
+        run: |
+          mkdir data
+          ./occ maintenance:install --verbose --database=sqlite --database-name=nextcloud --database-host=127.0.0.1 --database-user=root --database-pass=rootpassword --admin-user admin --admin-pass admin
+          ./occ app:enable --force spreed
+          ./occ app:enable --force magic_8ball_bot
+
+      - name: Run unit tests
+        working-directory: apps/magic_8ball_bot
+        run: composer run test:unit
+
+      - name: Print logs on failure
+        if: failure()
+        run: cat data/nextcloud.log

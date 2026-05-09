@@ -1,10 +1,14 @@
 {
 	"require-dev": {
-		"nextcloud/ocp": "dev-master"
+		"nextcloud/ocp": "dev-master",
+		"phpunit/phpunit": "^11.5"
 	},
 	"autoload": {
 		"psr-4": {
 			"OCA\\Magic8BallBot\\": "lib/"
 		}
+	},
+	"scripts": {
+		"test:unit": "phpunit -c tests/php/phpunit.xml"
 	}
 }
