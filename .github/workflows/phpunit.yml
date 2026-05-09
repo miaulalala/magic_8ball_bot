@@ -23,7 +23,11 @@ jobs:
       fail-fast: false
       matrix:
         php-versions: ['8.2', '8.3']
-        server-versions: ['stable33', 'master']
+        include:
+          - server-versions: 'stable33'
+            spreed-versions: 'stable33'
+          - server-versions: 'master'
+            spreed-versions: 'main'
 
     name: PHP ${{ matrix.php-versions }} / NC ${{ matrix.server-versions }}
 
@@ -41,7 +45,7 @@ jobs:
         with:
           persist-credentials: false
           repository: nextcloud/spreed
-          ref: ${{ matrix.server-versions }}
+          ref: ${{ matrix.spreed-versions }}
           path: apps/spreed
 
       - name: Checkout app
