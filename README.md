@@ -4,12 +4,8 @@ A Nextcloud app that adds a Magic 8-Ball bot to Talk conversations. Ask it a yes
 
 ## Usage
 
-Once installed and added to a conversation, there are two ways to consult the Magic 8-Ball:
+Once installed and added to a conversation, use the slash command to consult the Magic 8-Ball:
 
-**@mention** (requires Talk with `FEATURE_MENTION` support):
-> @Magic 8-Ball Will this PR get merged?
-
-**Slash command:**
 > /8ball Will this PR get merged?
 
 The bot replies inline with one of the 20 classic Magic 8-Ball answers, colour-coded by category:
