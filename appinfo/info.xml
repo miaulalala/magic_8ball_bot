@@ -7,8 +7,8 @@
 	  xsi:noNamespaceSchemaLocation="https://apps.nextcloud.com/schema/apps/info.xsd">
 	<id>magic_8ball_bot</id>
 	<name>Magic 8-Ball</name>
-	<summary><![CDATA[Ask the Magic 8-Ball a question by @mentioning it in Talk]]></summary>
-	<description><![CDATA[@mention the bot in any Talk conversation and ask it a yes/no question to receive a mystical answer.]]></description>
+	<summary><![CDATA[Ask the Magic 8-Ball a yes/no question in Talk using /8ball]]></summary>
+	<description><![CDATA[Use the /8ball slash command in any Talk conversation to ask a yes/no question and receive a mystical answer.]]></description>
 
 	<version>1.0.0</version>
 	<licence>agpl</licence>

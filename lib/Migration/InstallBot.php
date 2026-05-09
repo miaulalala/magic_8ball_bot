@@ -51,7 +51,7 @@ class InstallBot implements IRepairStep {
 			'Magic 8-Ball',
 			$secret,
 			'nextcloudapp://' . Application::APP_ID,
-			'Ask the Magic 8-Ball a yes/no question by @mentioning it or using `/8ball` followed by your question.',
+			'Ask the Magic 8-Ball a yes/no question using `/8ball` followed by your question.',
 			Bot::FEATURE_EVENT | Bot::FEATURE_MENTION,
 		);
 		$this->dispatcher->dispatchTyped($event);
