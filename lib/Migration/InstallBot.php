@@ -47,12 +47,17 @@ class InstallBot implements IRepairStep {
 			$this->appConfig->setAppValueString('secret', $secret, sensitive: true);
 		}
 
+		$features = Bot::FEATURE_EVENT;
+		if (defined('OCA\Talk\Model\Bot::FEATURE_MENTION')) {
+			$features |= Bot::FEATURE_MENTION;
+		}
+
 		$event = new BotInstallEvent(
 			'Magic 8-Ball',
 			$secret,
 			'nextcloudapp://' . Application::APP_ID,
 			'Ask the Magic 8-Ball a yes/no question using `/8ball` followed by your question.',
-			Bot::FEATURE_EVENT | Bot::FEATURE_MENTION,
+			$features,
 		);
 		$this->dispatcher->dispatchTyped($event);
 	}
