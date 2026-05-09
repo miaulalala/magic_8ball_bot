@@ -24,8 +24,8 @@ Find the bot ID with `php occ talk:bot:list`.
 
 ## Requirements
 
-- Nextcloud 33 or 34
-- Nextcloud Talk 23 or 24
+- Nextcloud 33
+- Nextcloud Talk 23
 
 ## License
 
