@@ -1,0 +1,10 @@
+{
+	"require-dev": {
+		"nextcloud/ocp": "dev-master"
+	},
+	"autoload": {
+		"psr-4": {
+			"OCA\\Magic8BallBot\\": "lib/"
+		}
+	}
+}
