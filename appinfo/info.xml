@@ -23,8 +23,8 @@
 
 	<category>social</category>
 
-	<website>https://github.com/nextcloud/magic_8ball_bot</website>
-	<bugs>https://github.com/nextcloud/magic_8ball_bot/issues</bugs>
+	<website>https://github.com/miaulalala/magic_8ball_bot</website>
+	<bugs>https://github.com/miaulalala/magic_8ball_bot/issues</bugs>
 
 	<dependencies>
 		<nextcloud min-version="33" max-version="34" />
